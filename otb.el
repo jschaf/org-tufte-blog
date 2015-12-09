@@ -1024,5 +1024,5 @@ FORMAT is the format to export to."
                   keys "\n")
        "</section>\n"))))
 
-(provide 'joe-blog)
+(provide 'otb)
 ;;; joe-blog.el ends here
