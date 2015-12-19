@@ -1004,13 +1004,14 @@ FORMAT is the format to export to."
                  ("eprinttype") ("url") ("urldate")))))
 
 ;; Override
-(defun org-ref-get-html-bibliography ()
-  "Create an html bibliography when there are keys."
-  (let ((keys (org-ref-get-bibtex-keys)))
+(defun org-ref-get-html-bibliography (&optional sort)
+  "Create an html bibliography when there are keys.
+SORT is unused and is for compatibility with the org-ref definition."
+  (let ((keys (org-ref-get-bibtex-keys 'sort)))
     (when keys
       (concat
        "<section>\n"
-       "<h2 class='org-ref-bib-h1' id='bibliography'>Bibliography</h2>\n"
+       "<h2 id='bibliography'>Bibliography</h2>\n"
        (mapconcat (lambda (x) (concat "<p>"
                                       (org-ref-get-bibtex-entry-html x)
                                       "</p>"))
