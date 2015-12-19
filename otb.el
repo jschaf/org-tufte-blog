@@ -31,9 +31,6 @@
 ;; Too much noise seeing every skipped file.
 (setq org-publish-list-skipped-files nil)
 
-;; We use KaTeX, not MathJax
-(setq org-html-mathjax-template "")
-
 ;; Use css classes to colorize code.
 (setq org-html-htmlize-output-type 'css)
 
