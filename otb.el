@@ -34,6 +34,15 @@
 ;; Use css classes to colorize code.
 (setq org-html-htmlize-output-type 'css)
 
+(defun otb-replace-or-add-to-alist (alist-var elem)
+  "Replace the first association in ALIST-VAR of (car ELEM) with ELEM.
+If nothing is found, then prepend ELEM to ALIST-VAR."
+  (let ((alist (symbol-value alist-var)))
+    (if (assoc (car elem) alist)
+        (setcdr (assoc (car elem) alist)
+                (cdr elem))
+      (set alist-var (cons elem alist)))))
+
 (dolist (project
          `(("blog-redux-content"
             :author "Joe Schafer"
@@ -79,7 +88,7 @@
            ("blog-redux"
             :components ("blog-redux-content" "blog-redux-static" "blog-redux-static-to-top-level")
             )))
-  (my:replace-or-add-to-alist 'org-publish-project-alist project))
+  (otb-replace-or-add-to-alist 'org-publish-project-alist project))
 
 
 (defvar tufte--files-with-latex nil
