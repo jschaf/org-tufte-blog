@@ -26,7 +26,7 @@
   "Prevent org-error, see http://wenshanren.org/?p=781, A, B."
   (font-lock-ensure))
 
-(setq org-html-with-latex 't)
+(setq org-html-with-latex t)
 
 ;; Too much noise seeing every skipped file.
 (setq org-publish-list-skipped-files nil)
