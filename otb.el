@@ -731,11 +731,11 @@ INFO is a plist holding contextual information.  See
              (format "<a href='%s#%s'%s>%s</a>"
                      path fragment attributes (or desc destination))))
           ;; Fuzzy link points nowhere.
-          ((nil)
-           (format "<i>%s</i>"
-                   (or desc
-                       (org-export-data
-                        (org-element-property :raw-link link) info))))
+          ;; ((nil)
+          ;;  (format "<i>%s</i>"
+          ;;          (or desc
+          ;;              (org-export-data
+          ;;               (org-element-property :raw-link link) info))))
           ;; Link points to a headline.
           (headline
            (let ((href
