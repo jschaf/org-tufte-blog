@@ -347,7 +347,6 @@ REFCNT - not sure what it's for."
      "\n"
      (format tufte-marginnote-definition-format def))))
 
-
 ;; Only change is removing the footnote body.
 (defun tufte-inner-template (contents info)
   "Return body of document string after HTML conversion.
@@ -370,21 +369,16 @@ holding export options."
    ;; Document contents.
    contents
 
-   ;; Bibliography
-   (org-ref-get-html-bibliography)
-
    ;; Footer
    "<footer>"
-   (if (org-export-get-date info "%Y")
-       (format "Published on <time itemprop='datePublished' datetime='%s'>%s</time>"
-               (org-export-get-date info "%Y-%m-%d")
-               (org-export-get-date info "%d %B %Y"))
-     "Written")
-   " by <span itemprop='author'>Joe Schafer</span>."
+   (when (org-export-get-date info "%Y")
+     (concat
+      (format "Published on <time itemprop='datePublished' datetime='%s'>%s</time>"
+              (org-export-get-date info "%Y-%m-%d")
+              (org-export-get-date info "%d %B %Y"))
+      " by <span itemprop='author'>Joe Schafer</span>."))
    "</footer>\n"
-
-   "</article>\n"
-   ))
+   "</article>\n"))
 
 (defvar tufte-main-header
   "<header id='main-header'>
@@ -450,8 +444,9 @@ holding export options."
    "</main>"
 
    ;; Postamble.
-   "<footer>"
-   "<span itemprop='author'>Joe Schafer</span> © <span itemprop='copyrightYear'>2015</span>."
+   "<footer id='main-footer'>"
+   "<span itemprop='author'>Joe Schafer</span> © <span itemprop='copyrightYear'>2015</span>. "
+   "<a href='https://github.com/jschaf'><span class='github-icon'></span>Github/jschaf</a>"
    " Built with Emacs, caffeine,  Oxford commas, and Org-Mode."
    "</footer>"
 
