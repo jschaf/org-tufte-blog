@@ -1,11 +1,11 @@
-;;; joe-blog.el --- a clean html export for org-export
-
+;;; otb.el --- Org-mode Tufte-inspired Blog
 ;;; Commentary:
 ;;
 
 ;;; Code:
 (require 'json)
 (require 'org)
+(require 'ox)
 (require 'org-ref)
 (require 'ox)
 (require 'ox-html)
@@ -1025,4 +1025,4 @@ FORMAT is the format to export to."
        "</section>\n"))))
 
 (provide 'otb)
-;;; joe-blog.el ends here
+;;; otb.el ends here
