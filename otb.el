@@ -37,51 +37,52 @@
 ;; Use css classes to colorize code.
 (setq org-html-htmlize-output-type 'css)
 
-(setq org-publish-project-alist
-      `(("blog-redux-content"
-         :author "Joe Schafer"
-         :email "Joe.Schafer@delta46.us"
-         :base-directory ,(concat joe-blog-directory "/posts")
-         :base-extension "org"
-         :publishing-directory ,joe-blog-directory-output
-         :publishing-function tufte-publish-to-html
-         :preparation-function joe-blog-prepare-content
-         :completion-function joe-blog-complete-content
+(dolist (project
+         `(("blog-redux-content"
+            :author "Joe Schafer"
+            :email "Joe.Schafer@delta46.us"
+            :base-directory ,(concat joe-blog-directory "/posts")
+            :base-extension "org"
+            :publishing-directory ,joe-blog-directory-output
+            :publishing-function tufte-publish-to-html
+            :preparation-function joe-blog-prepare-content
+            :completion-function joe-blog-complete-content
 
-         ;; HTML options
-         :html-head-include-default-style nil
-         :html-head-include-scripts nil
-         :html-html5-fancy t
-         :html-doctype "html5"
-         :html-container "section"
-         ;; General Options
-         :with-toc nil
-         :headline-levels 3
-         :table-of-contents nil
-         :section-numbers nil
-         :with-smart-quotes t
-         )
+            ;; HTML options
+            :html-head-include-default-style nil
+            :html-head-include-scripts nil
+            :html-html5-fancy t
+            :html-doctype "html5"
+            :html-container "section"
+            ;; General Options
+            :with-toc nil
+            :headline-levels 3
+            :table-of-contents nil
+            :section-numbers nil
+            :with-smart-quotes t
+            )
 
-        ("blog-redux-static"
-         :base-directory ,joe-blog-directory-static
-         :recursive t
-         :base-extension "css\\|eot\\|svg\\|ttf\\|woff"
-         :publishing-directory ,(concat joe-blog-directory-output "static")
-         :publishing-function org-publish-attachment
-         :preparation-function joe-blog-prepare-static
-         :completion-function joe-blog-complete-static
-         )
+           ("blog-redux-static"
+            :base-directory ,joe-blog-directory-static
+            :recursive t
+            :base-extension "css\\|eot\\|svg\\|ttf\\|woff"
+            :publishing-directory ,(concat joe-blog-directory-output "static")
+            :publishing-function org-publish-attachment
+            :preparation-function joe-blog-prepare-static
+            :completion-function joe-blog-complete-static
+            )
 
-        ("blog-redux-static-to-top-level"
-         :base-directory "~/prog/blog-redux/static"
-         :base-extension "xml\\|ico"
-         :publishing-directory "~/prog/blog-redux/output"
-         :publishing-function org-publish-attachment
-         )
+           ("blog-redux-static-to-top-level"
+            :base-directory "~/prog/blog-redux/static"
+            :base-extension "xml\\|ico"
+            :publishing-directory "~/prog/blog-redux/output"
+            :publishing-function org-publish-attachment
+            )
 
-        ("blog-redux"
-         :components ("blog-redux-content" "blog-redux-static" "blog-redux-static-to-top-level")
-         )))
+           ("blog-redux"
+            :components ("blog-redux-content" "blog-redux-static" "blog-redux-static-to-top-level")
+            )))
+  (my:replace-or-add-to-alist 'org-publish-project-alist project))
 
 
 (defvar tufte--files-with-latex nil
