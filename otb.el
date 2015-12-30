@@ -643,8 +643,7 @@ INFO is a plist holding contextual information.  See
              ((and (plist-get info :html-link-org-files-as-html)
                    (string= ".org"
                             (downcase (file-name-extension raw-path "."))))
-              (concat (file-name-sans-extension raw-path) "."
-                      "/"))
+              (concat (file-name-sans-extension raw-path) "/"))
              (t raw-path))))
          (type (org-element-property :type link))
          (raw-path (org-element-property :path link))
