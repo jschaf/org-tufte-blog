@@ -78,6 +78,16 @@ If nothing is found, then prepend ELEM to ALIST-VAR."
             :completion-function joe-blog-complete-static
             )
 
+           ("blog-redux-images"
+            :base-directory ,(concat joe-blog-directory "/images")
+            :recursive nil
+            :base-extension "jpg\\|png\\|gif"
+            :publishing-directory ,(concat joe-blog-directory-output "images")
+            :publishing-function org-publish-attachment
+            ;; :preparation-function joe-blog-prepare-static
+            ;; :completion-function joe-blog-complete-static
+            )
+
            ("blog-redux-static-to-top-level"
             :base-directory "~/prog/blog-redux/static"
             :base-extension "xml\\|ico"
@@ -86,7 +96,9 @@ If nothing is found, then prepend ELEM to ALIST-VAR."
             )
 
            ("blog-redux"
-            :components ("blog-redux-content" "blog-redux-static" "blog-redux-static-to-top-level")
+            :components ("blog-redux-content" "blog-redux-static"
+                         "blog-redux-static-to-top-level"
+                         "blog-redux-images")
             )))
   (otb-replace-or-add-to-alist 'org-publish-project-alist project))
 
