@@ -113,8 +113,9 @@ If nothing is found, then prepend ELEM to ALIST-VAR."
     (message "Nothing to mathify"))
 
   (when files
-    (let ((file-args (mapconcat #'shell-quote-argument files " ")))
-      (shell-command (format "mathify %s" file-args)))))
+    (let ((default-directory joe-blog-directory)
+          (file-args (mapconcat #'shell-quote-argument files " ")))
+      (shell-command (format "node mathify.js %s" file-args)))))
 
 
 (defvar joe-blog-modified-files '()
