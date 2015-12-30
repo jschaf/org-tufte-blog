@@ -296,18 +296,30 @@ If FORCE is non-nil, force recompilation even if files haven't changed."
           "  </url>"))
 
 (defun tufte-publish-sitemap ()
-  "Publish sitemap.xml to output."
+  "Publish sitemap.xml to the output-directory.
+Org files that contain the string '#+DRAFT: t' are excluded from
+the sitemap."
   (interactive)
-
   (let* ((sitemap-output-file (concat joe-blog-directory "/output/sitemap.xml"))
+         (post-name nil)
+         (file-is-draft #'(lambda (file)
+                            (with-temp-buffer
+                              (insert-file-contents file)
+                              (search-forward "#+DRAFT: t" nil 'no-error))))
+         (transform-file-to-url
+          `(lambda (file)
+             (if (or (,file-is-draft file)
+                     (string-equal post-name "index"))
+                 nil
+               (concat joe-blog-url "/" (file-name-sans-extension
+                                         (file-name-nondirectory file))))))
          (urls
-          (mapcar #'(lambda (file)
-                      (let ((post-name (file-name-sans-extension
-                                        (file-name-nondirectory file))))
-                        (when (string-equal post-name "index") (setq post-name ""))
-                        (concat joe-blog-url "/" post-name)))
-                  (directory-files (concat joe-blog-directory "/posts") t ".org$")))
-         (url-xmls (mapconcat #'(lambda (url) (format tufte-sitemap-xml-url-template url))
+          (-non-nil
+           (mapcar transform-file-to-url
+                   (directory-files (concat joe-blog-directory "/posts")
+                                    'absolute-file-names ".org$"))))
+         (url-xmls (mapconcat #'(lambda (url)
+                                  (format tufte-sitemap-xml-url-template url))
                               urls "\n"))
          (sitemap-xml (format tufte-sitemap-xml-template url-xmls)))
     (write-region sitemap-xml nil sitemap-output-file)))
