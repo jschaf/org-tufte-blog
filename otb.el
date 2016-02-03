@@ -465,6 +465,15 @@ holding export options."
 
    "<meta name=viewport content='width=device-width, initial-scale=1'>\n"
 
+   ;; LoadCSS: A function for loading CSS asynchronously.
+   ;; https://github.com/filamentgroup/loadCSS/
+   "<script>"
+   (tufte--get-static-file-as-string "loadCSS.js")
+   "loadCSS('/static/style.css');"
+   (when tufte-has-latex-p
+     "loadCSS('//cdnjs.cloudflare.com/ajax/libs/KaTeX/0.5.1/katex.min.css');")
+   "</script>"
+
    "</head>\n"
    "<body itemscope itemtype='http://schema.org/Blog'>\n"
    tufte-main-header
@@ -482,18 +491,13 @@ holding export options."
    " Built with Emacs, caffeine,  Oxford commas, and Org-Mode."
    "</footer>"
 
-   "<script>"
-   (tufte--get-static-file-as-string "loadCSS.js")
-
-   "loadCSS('/static/style.css');"
-   (when tufte-has-latex-p
-     "loadCSS('//cdnjs.cloudflare.com/ajax/libs/KaTeX/0.5.1/katex.min.css');")
-   "</script>"
-
    "<noscript>\n"
-   "<link rel='stylesheet' href='/static/style.css'>\n"
+   ;; The reason for the property tag is to appease the validator which doesn't
+   ;; like links in the body unless they have an attribute.  See:
+   ;; http://stackoverflow.com/questions/18549726
+   "<link rel='stylesheet' href='/static/style.css' property='stylesheet'>\n"
    (when tufte-has-latex-p
-     "<link rel='stylesheet' href='//cdnjs.cloudflare.com/ajax/libs/KaTeX/0.5.1/katex.min.css'>\n")
+     "<link rel='stylesheet' href='//cdnjs.cloudflare.com/ajax/libs/KaTeX/0.5.1/katex.min.css' property='stylesheet'>\n")
    "</noscript>\n"
    ;; Closing document.
    "</body>\n</html>"))
