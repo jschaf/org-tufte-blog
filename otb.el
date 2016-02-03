@@ -35,8 +35,11 @@
 (setq org-html-htmlize-output-type 'css)
 
 (defun otb-replace-or-add-to-alist (alist-var elem)
-  "Replace the first association in ALIST-VAR of (car ELEM) with ELEM.
-If nothing is found, then prepend ELEM to ALIST-VAR."
+  "Replace the first entry in ALIST-VAR whose `car' equals (car ELEM) with ELEM.
+ALIST-VAR must be a symbol.  If no \(car entry\) in ALIST-VAR
+equals the `car' of ELEM, then prepend ELEM to ALIST-VAR.
+
+\(my:replace-or-add-to-alist 'an-alist '(\"key\" \"data\")\)"
   (let ((alist (symbol-value alist-var)))
     (if (assoc (car elem) alist)
         (setcdr (assoc (car elem) alist)
